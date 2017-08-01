@@ -84,6 +84,7 @@ class pwg_image
     }
 
     $class = 'image_'.$this->library;
+    $source_filepath = realpath($source_filepath);
     $this->image = new $class($source_filepath);
   }
 
@@ -491,6 +492,8 @@ class image_imagick implements imageInterface
   {
     // use 4:2:2 chroma subsampling (reduce file size by 20-30% with "almost" no human perception)
     $this->image->setSamplingFactors( array(2,1) );
+    file_put_contents($destination_filepath, '');
+    $destination_filepath = realpath($destination_filepath);
     return $this->image->writeImage($destination_filepath);
   }
 }
